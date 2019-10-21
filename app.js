@@ -4,12 +4,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const fs = require('fs');
-require('dotenv').config();
 const dotenv = require('dotenv');
+dotenv.config();
 const envConfig = dotenv.parse(fs.readFileSync('.env.local'));
 for (const k in envConfig) {
   process.env[k] = envConfig[k];
 }
+
+console.log(process.env.dbHost)
+console.log(process.env.dbArticleDatabase)
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
