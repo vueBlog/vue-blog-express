@@ -17,6 +17,7 @@ const usersRouter = require('./routes/users');
 const addUserRouter = require('./routes/addUser');
 const signInRouter = require('./routes/signIn');
 const tokenGetUserInfoRouter = require('./routes/tokenGetUserInfo');
+const addArticleRouter = require('./routes/addArticle');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/addUser', addUserRouter);
 app.use('/api/signIn', signInRouter);
 app.use('/api/tokenGetUserInfo', tokenGetUserInfoRouter);
+app.use('/api/addArticle', addArticleRouter);
 
 
 // catch 404 and forward to error handler
