@@ -12,7 +12,7 @@ async function tokenGetUserInfo(req, res, next) {
       return res.json({
         isok: true,
         data: {
-          id: selectData[0].authorId,
+          id: selectData[0].authorId * 1,
           name: selectData[0].authorName,
           email: selectData[0].authorEmail,
           admin: selectData[0].admin,

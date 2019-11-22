@@ -12,7 +12,7 @@ for (const k in envConfig) {
   process.env[k] = envConfig[k];
 }
 
-const indexRouter = require('./routes/index');
+const articleListRouter = require('./routes/articleList');
 const usersRouter = require('./routes/users');
 const addUserRouter = require('./routes/addUser');
 const signInRouter = require('./routes/signIn');
@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/home', indexRouter);
+app.use('/api/articleList', articleListRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/addUser', addUserRouter);
 app.use('/api/signIn', signInRouter);
