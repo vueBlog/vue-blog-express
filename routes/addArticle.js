@@ -28,8 +28,8 @@ async function addArticle(req, res, next) {
   try {
     let subTitle = req.body.content.slice(0, 200)
     let articleContentHtml = md.use(markdownItTocAndAnchor).render(req.body.content)
-    let insertData = await mysql.query('INSERT INTO vue_blog (articleTitle, articleSubTitle, articleNature, articleKey, articleContentMarkdown, articleContentHtml, articleAuthorId, articleAuthor, articleCreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, req.body.authorId, req.body.authorName, moment().format('YYYY-MM-DD HH:mm:ss')])
+    let insertData = await mysql.query('INSERT INTO vue_blog (articleTitle, articleSubTitle, articleNature, articleKey, articleContentMarkdown, articleContentHtml, articleAuthorId, articleCreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, req.body.authorId, moment().format('YYYY-MM-DD HH:mm:ss')])
     return res.json({
       isok: true,
       msg: ''

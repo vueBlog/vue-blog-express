@@ -8,10 +8,32 @@ async function articleList(req, res, next) {
   try {
     let limitNumber = req.body.limit || 10
     let offsetNumber = (req.body.page - 1) * limitNumber
-    let orderType = req.body.order || 'ASC'
-
-    let totalData = await mysql.query('SELECT * FROM vue_blog')
-    let selectData = await mysql.query('SELECT * FROM vue_blog ORDER BY articleCreateTime DESC LIMIT ? OFFSET ?',
+    let totalData
+    let selectData
+    let totalSql
+    let selectSql
+    let selectTableHead = 'articleId, articleTitle, articleSubTitle, articleNature, articleAuthorId, articleCreateTime, articleView, articleStart'
+    if (req.body.justOriginal) {
+      totalSql = 'SELECT * FROM vue_blog WHERE articleNature = 0'
+      if (req.body.order === 0) {
+        selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleCreateTime DESC LIMIT ? OFFSET ?`
+      } else if (req.body.order === 1) {
+         selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleView DESC LIMIT ? OFFSET ?`
+      } else if (req.body.order === 2) {
+        selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleStart DESC LIMIT ? OFFSET ?`
+      }
+    } else {
+      totalSql = 'SELECT * FROM vue_blog'
+      if (req.body.order === 0) {
+        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleCreateTime DESC LIMIT ? OFFSET ?`
+      } else if (req.body.order === 1) {
+        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleView DESC LIMIT ? OFFSET ?`
+      } else if (req.body.order === 2) {
+        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleStart DESC LIMIT ? OFFSET ?`
+      }
+    }
+    totalData = await mysql.query(totalSql)
+    selectData = await mysql.query(selectSql,
       [limitNumber, offsetNumber])
     return res.json({
       isok: true,
