@@ -1,12 +1,13 @@
 const mysql = require('mysql');
 
+// 创建连接池
 const pool = mysql.createPool({
   connectionLimit: 50,
   host: process.env.dbHost,
   user: process.env.dbUser,
   password: process.env.dbPassword,
   database: process.env.dbDatabase,
-  multipleStatements: true //是否允许执行多条sql语句
+  multipleStatements: true
 });
 
 let query = function (sql, values) {

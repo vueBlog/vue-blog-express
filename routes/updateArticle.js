@@ -22,9 +22,9 @@ const md = new MarkdownIt({
   }
 })
 
-router.post('/', addArticle)
+router.post('/', updateArticle)
 
-async function addArticle(req, res, next) {
+async function updateArticle(req, res, next) {
   try {
     let subTitle = req.body.content.slice(0, 200)
     let titleArray = []
@@ -34,8 +34,9 @@ async function addArticle(req, res, next) {
         titleArray = tocArray
       }
     }).render(`@[toc]${req.body.content}`)
-    let insertData = await mysql.query('INSERT INTO vue_blog (articleTitle, articleSubTitle, articleNature, articleKey, articleContentMarkdown, articleContentHtml, articleAuthorId, articleCreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, req.body.authorId, moment().format('YYYY-MM-DD HH:mm:ss')])
+
+    let updateData = await mysql.query('UPDATE vue_blog SET articleTitle = ?, articleSubTitle = ?, articleNature = ?, articleKey = ?, articleContentMarkdown = ?, articleContentHtml = ?, articleUpdateTime  = ? WHERE articleId = ?',
+      [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.articleId])
     if (titleArray.length) {
       titleArray.map(item => {
         if (titleObject.hasOwnProperty(`h${item.level}`)) {
@@ -44,15 +45,15 @@ async function addArticle(req, res, next) {
           titleObject[`h${item.level}`] = item.content
         }
       })
-      await mysql.query('INSERT INTO vue_blog_title (articleId, h1, h2, h3, h4, h5, h6) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      await mysql.query('UPDATE vue_blog_title SET h1 = ?, h2 = ?, h3 = ?, h4 = ?, h5 = ?, h6 = ? WHERE articleId = ?',
         [
-          insertData.insertId, 
           titleObject.h1 ? titleObject.h1 : '',
           titleObject.h2 ? titleObject.h2 : '',
           titleObject.h3 ? titleObject.h3 : '',
           titleObject.h4 ? titleObject.h4 : '',
           titleObject.h5 ? titleObject.h5 : '',
-          titleObject.h6 ? titleObject.h6 : ''
+          titleObject.h6 ? titleObject.h6 : '',
+          req.body.articleId
         ]
       )
     }

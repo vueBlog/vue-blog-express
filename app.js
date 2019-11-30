@@ -13,11 +13,13 @@ for (const k in envConfig) {
 }
 
 const articleListRouter = require('./routes/articleList');
-const usersRouter = require('./routes/users');
+const getAsideRouter = require('./routes/getAside');
 const addUserRouter = require('./routes/addUser');
 const signInRouter = require('./routes/signIn');
 const tokenGetUserInfoRouter = require('./routes/tokenGetUserInfo');
 const addArticleRouter = require('./routes/addArticle');
+const updateArticleRouter = require('./routes/updateArticle');
+const getArticleDetailRouter = require('./routes/getArticleDetail');
 
 const app = express();
 
@@ -33,11 +35,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/articleList', articleListRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/getAside', getAsideRouter);
 app.use('/api/addUser', addUserRouter);
 app.use('/api/signIn', signInRouter);
 app.use('/api/tokenGetUserInfo', tokenGetUserInfoRouter);
 app.use('/api/addArticle', addArticleRouter);
+app.use('/api/updateArticle', updateArticleRouter);
+app.use('/api/getArticleDetail', getArticleDetailRouter);
 
 
 // catch 404 and forward to error handler
