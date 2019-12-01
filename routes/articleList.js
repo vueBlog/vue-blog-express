@@ -8,33 +8,28 @@ async function articleList(req, res, next) {
   try {
     let limitNumber = req.query.limit * 1 || 10
     let offsetNumber = (req.query.page * 1 - 1) * limitNumber
-    let totalData
-    let selectData
-    let totalSql
-    let selectSql
+    let totalData, selectData, totalSql, selectSql
     let selectTableHead = 'articleId, articleTitle, articleSubTitle, articleNature, articleAuthorId, articleCreateTime, articleView, articleStart'
-    if (req.query.justOriginal == 'true') {
-      totalSql = 'SELECT * FROM vue_blog WHERE articleNature = 0'
-      if (req.query.order == 0) {
-        selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleCreateTime DESC LIMIT ? OFFSET ?`
-      } else if (req.query.order == 1) {
-         selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleView DESC LIMIT ? OFFSET ?`
-      } else if (req.query.order == 2) {
-        selectSql = `SELECT ${selectTableHead} FROM vue_blog WHERE articleNature = 0 ORDER BY articleStart DESC LIMIT ? OFFSET ?`
-      }
-    } else {
-      totalSql = 'SELECT * FROM vue_blog'
-      if (req.query.order == 0) {
-        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleCreateTime DESC LIMIT ? OFFSET ?`
-      } else if (req.query.order == 1) {
-        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleView DESC LIMIT ? OFFSET ?`
-      } else if (req.query.order == 2) {
-        selectSql = `SELECT ${selectTableHead} FROM vue_blog ORDER BY articleStart DESC LIMIT ? OFFSET ?`
-      }
+    let orderSql, whereSql
+    if (req.query.order == 0) {
+      orderSql = `ORDER BY articleCreateTime DESC LIMIT ${limitNumber} OFFSET ${offsetNumber}`
+    } else if (req.query.order == 1) {
+      orderSql = `ORDER BY articleView DESC LIMIT ${limitNumber} OFFSET ${offsetNumber}`
+    } else if (req.query.order == 2) {
+      orderSql = `ORDER BY articleStart DESC LIMIT ${limitNumber} OFFSET ${offsetNumber}`
     }
+    if (req.query.justOriginal == 'true') {
+      let term = 'articleNature = 0'
+      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+    }
+    if (req.query.dateTime) {
+      let term = `DATE_FORMAT(articleCreateTime, '%Y-%m') = '${req.query.dateTime}'`
+      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+    }
+    totalSql = `SELECT * FROM vue_blog ${whereSql}`
+    selectSql = `SELECT ${selectTableHead} FROM vue_blog ${whereSql} ${orderSql}`
     totalData = await mysql.query(totalSql)
-    selectData = await mysql.query(selectSql,
-      [limitNumber, offsetNumber])
+    selectData = await mysql.query(selectSql)
     return res.json({
       isok: true,
       data: {

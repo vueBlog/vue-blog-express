@@ -20,6 +20,8 @@ const tokenGetUserInfoRouter = require('./routes/tokenGetUserInfo');
 const addArticleRouter = require('./routes/addArticle');
 const updateArticleRouter = require('./routes/updateArticle');
 const getArticleDetailRouter = require('./routes/getArticleDetail');
+const deleteArticleRouter = require('./routes/deleteArticle');
+const addStarRouter = require('./routes/addStar');
 
 const app = express();
 
@@ -42,7 +44,8 @@ app.use('/api/tokenGetUserInfo', tokenGetUserInfoRouter);
 app.use('/api/addArticle', addArticleRouter);
 app.use('/api/updateArticle', updateArticleRouter);
 app.use('/api/getArticleDetail', getArticleDetailRouter);
-
+app.use('/api/deleteArticle', deleteArticleRouter);
+app.use('/api/addStar', addStarRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
