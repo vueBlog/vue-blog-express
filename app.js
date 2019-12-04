@@ -14,6 +14,7 @@ for (const k in envConfig) {
 
 const articleListRouter = require('./routes/articleList');
 const getAsideRouter = require('./routes/getAside');
+const getAsideAuthorRouter = require('./routes/getAsideAuthor');
 const addUserRouter = require('./routes/addUser');
 const signInRouter = require('./routes/signIn');
 const tokenGetUserInfoRouter = require('./routes/tokenGetUserInfo');
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/articleList', articleListRouter);
 app.use('/api/getAside', getAsideRouter);
+app.use('/api/getAsideAuthor', getAsideAuthorRouter);
 app.use('/api/addUser', addUserRouter);
 app.use('/api/signIn', signInRouter);
 app.use('/api/tokenGetUserInfo', tokenGetUserInfoRouter);

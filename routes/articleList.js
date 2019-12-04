@@ -26,6 +26,15 @@ async function articleList(req, res, next) {
       let term = `DATE_FORMAT(articleCreateTime, '%Y-%m') = '${req.query.dateTime}'`
       whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
     }
+    if (req.query.author) {
+      let articleAuthorId = req.query.author
+      if (articleAuthorId === 'admin') {
+        let authorInfo = await mysql.query('SELECT authorId FROM vue_blog_author')
+        articleAuthorId = authorInfo[0].authorId
+      }
+      let term = `articleAuthorId = '${articleAuthorId}'`
+      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+    }
     totalSql = `SELECT * FROM vue_blog ${whereSql}`
     selectSql = `SELECT ${selectTableHead} FROM vue_blog ${whereSql} ${orderSql}`
     totalData = await mysql.query(totalSql)
