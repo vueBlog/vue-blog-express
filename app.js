@@ -23,6 +23,7 @@ const updateArticleRouter = require('./routes/updateArticle');
 const getArticleDetailRouter = require('./routes/getArticleDetail');
 const deleteArticleRouter = require('./routes/deleteArticle');
 const addStarRouter = require('./routes/addStar');
+const imagesRouter = require('./routes/images');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use('/api/updateArticle', updateArticleRouter);
 app.use('/api/getArticleDetail', getArticleDetailRouter);
 app.use('/api/deleteArticle', deleteArticleRouter);
 app.use('/api/addStar', addStarRouter);
+app.use('/api/images', imagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
