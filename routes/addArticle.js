@@ -18,7 +18,7 @@ const md = new MarkdownIt({
           return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>'
         }).join('')
         html = '<ol>' + html + '</ol>'
-        if (lines.length > 3) {
+        if (lines.length) {
           html += '<b class="name">' + lang + '</b>'
         }
         return '<pre class="hljs"><code>' +
