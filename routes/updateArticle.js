@@ -54,16 +54,20 @@ async function updateArticle(req, res, next) {
 
     let updateData = await mysql.query('UPDATE vue_blog SET articleTitle = ?, articleSubTitle = ?, articleNature = ?, articleKey = ?, articleContentMarkdown = ?, articleContentHtml = ?, articleUpdateTime  = ? WHERE articleId = ?',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.articleId])
-    if (titleArray.length) {
-      titleArray.map(item => {
-        if (titleObject.hasOwnProperty(`h${item.level}`)) {
-          titleObject[`h${item.level}`] += `,${item.content}`
-        } else {
-          titleObject[`h${item.level}`] = item.content
-        }
-      })
-      await mysql.query('UPDATE vue_blog_title SET h1 = ?, h2 = ?, h3 = ?, h4 = ?, h5 = ?, h6 = ? WHERE articleId = ?',
+
+    titleArray.map(item => {
+      if (titleObject.hasOwnProperty(`h${item.level}`)) {
+        titleObject[`h${item.level}`] += `,${item.content}`
+      } else {
+        titleObject[`h${item.level}`] = item.content
+      }
+    })
+    let selectTitle = await mysql.query('SELECT articleId FROM vue_blog_title WHERE articleId = ?', [req.body.articleId])
+    console.log(selectTitle)
+    if (selectTitle.length) {
+      await mysql.query('UPDATE vue_blog_title SET h0 = ?, h1 = ?, h2 = ?, h3 = ?, h4 = ?, h5 = ?, h6 = ? WHERE articleId = ?',
         [
+          req.body.title,
           titleObject.h1 ? titleObject.h1 : '',
           titleObject.h2 ? titleObject.h2 : '',
           titleObject.h3 ? titleObject.h3 : '',
@@ -71,6 +75,19 @@ async function updateArticle(req, res, next) {
           titleObject.h5 ? titleObject.h5 : '',
           titleObject.h6 ? titleObject.h6 : '',
           req.body.articleId
+        ]
+      )
+    } else {
+      await mysql.query('INSERT INTO vue_blog_title (articleId, h0, h1, h2, h3, h4, h5, h6) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [
+          req.body.articleId,
+          req.body.title,
+          titleObject.h1 ? titleObject.h1 : '',
+          titleObject.h2 ? titleObject.h2 : '',
+          titleObject.h3 ? titleObject.h3 : '',
+          titleObject.h4 ? titleObject.h4 : '',
+          titleObject.h5 ? titleObject.h5 : '',
+          titleObject.h6 ? titleObject.h6 : ''
         ]
       )
     }

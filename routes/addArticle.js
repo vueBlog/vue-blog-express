@@ -53,26 +53,25 @@ async function addArticle(req, res, next) {
     }).render(`@[toc]${req.body.content}`)
     let insertData = await mysql.query('INSERT INTO vue_blog (articleTitle, articleSubTitle, articleNature, articleKey, articleContentMarkdown, articleContentHtml, articleAuthorId, articleCreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, req.body.authorId, moment().format('YYYY-MM-DD HH:mm:ss')])
-    if (titleArray.length) {
-      titleArray.map(item => {
-        if (titleObject.hasOwnProperty(`h${item.level}`)) {
-          titleObject[`h${item.level}`] += `,${item.content}`
-        } else {
-          titleObject[`h${item.level}`] = item.content
-        }
-      })
-      await mysql.query('INSERT INTO vue_blog_title (articleId, h1, h2, h3, h4, h5, h6) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [
-          insertData.insertId, 
-          titleObject.h1 ? titleObject.h1 : '',
-          titleObject.h2 ? titleObject.h2 : '',
-          titleObject.h3 ? titleObject.h3 : '',
-          titleObject.h4 ? titleObject.h4 : '',
-          titleObject.h5 ? titleObject.h5 : '',
-          titleObject.h6 ? titleObject.h6 : ''
-        ]
-      )
-    }
+    titleArray.map(item => {
+      if (titleObject.hasOwnProperty(`h${item.level}`)) {
+        titleObject[`h${item.level}`] += `,${item.content}`
+      } else {
+        titleObject[`h${item.level}`] = item.content
+      }
+    })
+    await mysql.query('INSERT INTO vue_blog_title (articleId, h0, h1, h2, h3, h4, h5, h6) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        insertData.insertId, 
+        req.body.title,
+        titleObject.h1 ? titleObject.h1 : '',
+        titleObject.h2 ? titleObject.h2 : '',
+        titleObject.h3 ? titleObject.h3 : '',
+        titleObject.h4 ? titleObject.h4 : '',
+        titleObject.h5 ? titleObject.h5 : '',
+        titleObject.h6 ? titleObject.h6 : ''
+      ]
+    )
     return res.json({
       isok: true,
       msg: ''
