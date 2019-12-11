@@ -30,8 +30,19 @@ async function search(req, res, next) {
         break
       }
     }
+    if (searchList.length < 10) {
+      let keySelectData = await mysql.query(`SELECT articleId, articleTitle, articleKey FROM vue_blog WHERE articleKey LIKE '%${queryString}%'`)
+      for (let j = 0, len = keySelectData.length; j < len; j++) {
+        keySelectData[j].type = 7
+        let nowKey = keySelectData[j].articleKey ? keySelectData[j].articleKey.split(',') : []
+        nowKey = nowKey.filter(item => item.indexOf(queryString) > -1)[0]
+        keySelectData[j].articleTitle = `${keySelectData[j].articleTitle} => ${nowKey}`
+      }
+      searchList = searchList.concat(keySelectData)
+    }
     
     if (searchList.length) {
+      if (searchList.length > 10) searchList.length = 10
       return res.json({
         isok: true,
         data: {
