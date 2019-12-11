@@ -23,6 +23,7 @@ async function search(req, res, next) {
           selectData[j].type = i
           let nowTitle = selectData[j][hTitle].split(',')
           nowTitle = nowTitle.filter(item => item.indexOf(queryString) > -1)[0]
+          selectData[j][hTitle] = nowTitle
           selectData[j].articleTitle = `${selectData[j].h0} => ${nowTitle}`
         }
         searchList = searchList.concat(selectData)
