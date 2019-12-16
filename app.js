@@ -25,6 +25,8 @@ const getArticleDetailRouter = require('./routes/getArticleDetail');
 const deleteArticleRouter = require('./routes/deleteArticle');
 const addStarRouter = require('./routes/addStar');
 const imagesRouter = require('./routes/images');
+const addUserHeaderRouter = require('./routes/addUserHeader');
+const adminUserRouter = require('./routes/adminUser');
 
 const app = express();
 
@@ -52,6 +54,8 @@ app.use('/api/getArticleDetail', getArticleDetailRouter);
 app.use('/api/deleteArticle', deleteArticleRouter);
 app.use('/api/addStar', addStarRouter);
 app.use('/api/images', imagesRouter);
+app.use('/api/addUserHeader', addUserHeaderRouter);
+app.use('/api/adminUser', adminUserRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
