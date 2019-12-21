@@ -25,10 +25,12 @@ async function addViews(req, res, next) {
 
 async function selectViews(req, res, next) {
   try {
-    let selectData = await mysql.query('SELECT routeFrom, routeTo, time FROM vue_blog_Views ORDER BY time DESC')
+    let selectData = await mysql.query("SELECT DATE_FORMAT(time, '%Y-%m-%d') as time, COUNT(*) as views FROM vue_blog_views WHERE DAYOFYEAR(time) >= DAYOFYEAR(?) AND DAYOFYEAR(time) <= DAYOFYEAR(?) GROUP BY DATE_FORMAT(time, '%Y-%m-%d')",
+      [req.query.start, req.query.end])
+    console.log(selectData)
     return res.json({
       isok: true,
-      data: selectData[0],
+      data: selectData,
       msg: ''
     });
   } catch (error) {
