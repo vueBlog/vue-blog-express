@@ -28,6 +28,7 @@ const imagesRouter = require('./routes/images');
 const addUserHeaderRouter = require('./routes/addUserHeader');
 const adminUserRouter = require('./routes/adminUser');
 const adminViewsRouter = require('./routes/adminViews');
+const adminAuthorityRouter = require('./routes/adminAuthority');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/api/images', imagesRouter);
 app.use('/api/addUserHeader', addUserHeaderRouter);
 app.use('/api/adminUser', adminUserRouter);
 app.use('/api/adminViews', adminViewsRouter);
+app.use('/api/adminAuthority', adminAuthorityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
