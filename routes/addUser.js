@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('./../mysql/db')
 const md5 = require("blueimp-md5")
+const moment = require('moment')
 
 router.post('/', addUser)
 
@@ -27,11 +28,11 @@ async function addUser(req, res, next) {
         });
       }
 
-      insertData = await mysql.query('INSERT INTO vue_blog_author (authorName, authorPassword, authorEmail, admin, authority, token) VALUES (?, ?, ?, 0, 2, ?)',
-        [req.body.name, req.body.password, req.body.email, token])
+      insertData = await mysql.query('INSERT INTO vue_blog_author (authorName, authorPassword, authorEmail, admin, authority, token, createTime) VALUES (?, ?, ?, 0, 2, ?, ?)',
+        [req.body.name, req.body.password, req.body.email, token, moment().format('YYYY-MM-DD HH:mm:ss')])
     } else {
-      insertData = await mysql.query('INSERT INTO vue_blog_author (authorName, authorPassword, authorEmail, admin, authority, token) VALUES (?, ?, ?, 1, 0, ?)',
-        [req.body.name, req.body.password, req.body.email, token])
+      insertData = await mysql.query('INSERT INTO vue_blog_author (authorName, authorPassword, authorEmail, admin, authority, token, createTime) VALUES (?, ?, ?, 1, 0, ?, ?)',
+        [req.body.name, req.body.password, req.body.email, token, moment().format('YYYY-MM-DD HH:mm:ss')])
     }
     return res.json({
       isok: true,
