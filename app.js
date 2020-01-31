@@ -12,6 +12,7 @@ for (const k in envConfig) {
   process.env[k] = envConfig[k];
 }
 
+const pathname = '/vue-blog'
 const searchRouter = require('./routes/search');
 const articleListRouter = require('./routes/articleList');
 const getAsideRouter = require('./routes/getAside');
@@ -43,23 +44,23 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/search', searchRouter);
-app.use('/api/articleList', articleListRouter);
-app.use('/api/getAside', getAsideRouter);
-app.use('/api/getAsideAuthor', getAsideAuthorRouter);
-app.use('/api/addUser', addUserRouter);
-app.use('/api/signIn', signInRouter);
-app.use('/api/tokenGetUserInfo', tokenGetUserInfoRouter);
-app.use('/api/addArticle', addArticleRouter);
-app.use('/api/updateArticle', updateArticleRouter);
-app.use('/api/getArticleDetail', getArticleDetailRouter);
-app.use('/api/deleteArticle', deleteArticleRouter);
-app.use('/api/addStar', addStarRouter);
-app.use('/api/images', imagesRouter);
-app.use('/api/addUserHeader', addUserHeaderRouter);
-app.use('/api/adminUser', adminUserRouter);
-app.use('/api/adminViews', adminViewsRouter);
-app.use('/api/adminAuthority', adminAuthorityRouter);
+app.use(`${pathname}/api/search`, searchRouter);
+app.use(`${pathname}/api/articleList`, articleListRouter);
+app.use(`${pathname}/api/getAside`, getAsideRouter);
+app.use(`${pathname}/api/getAsideAuthor`, getAsideAuthorRouter);
+app.use(`${pathname}/api/addUser`, addUserRouter);
+app.use(`${pathname}/api/signIn`, signInRouter);
+app.use(`${pathname}/api/tokenGetUserInfo`, tokenGetUserInfoRouter);
+app.use(`${pathname}/api/addArticle`, addArticleRouter);
+app.use(`${pathname}/api/updateArticle`, updateArticleRouter);
+app.use(`${pathname}/api/getArticleDetail`, getArticleDetailRouter);
+app.use(`${pathname}/api/deleteArticle`, deleteArticleRouter);
+app.use(`${pathname}/api/addStar`, addStarRouter);
+app.use(`${pathname}/api/images`, imagesRouter);
+app.use(`${pathname}/api/addUserHeader`, addUserHeaderRouter);
+app.use(`${pathname}/api/adminUser`, adminUserRouter);
+app.use(`${pathname}/api/adminViews`, adminViewsRouter);
+app.use(`${pathname}/api/adminAuthority`, adminAuthorityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
