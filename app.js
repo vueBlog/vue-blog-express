@@ -12,7 +12,6 @@ for (const k in envConfig) {
   process.env[k] = envConfig[k];
 }
 
-const pathname = '/vue-blog'
 const searchRouter = require('./routes/search');
 const articleListRouter = require('./routes/articleList');
 const getAsideRouter = require('./routes/getAside');
@@ -44,23 +43,23 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(`${pathname}/api/search`, searchRouter);
-app.use(`${pathname}/api/articleList`, articleListRouter);
-app.use(`${pathname}/api/getAside`, getAsideRouter);
-app.use(`${pathname}/api/getAsideAuthor`, getAsideAuthorRouter);
-app.use(`${pathname}/api/addUser`, addUserRouter);
-app.use(`${pathname}/api/signIn`, signInRouter);
-app.use(`${pathname}/api/tokenGetUserInfo`, tokenGetUserInfoRouter);
-app.use(`${pathname}/api/addArticle`, addArticleRouter);
-app.use(`${pathname}/api/updateArticle`, updateArticleRouter);
-app.use(`${pathname}/api/getArticleDetail`, getArticleDetailRouter);
-app.use(`${pathname}/api/deleteArticle`, deleteArticleRouter);
-app.use(`${pathname}/api/addStar`, addStarRouter);
-app.use(`${pathname}/api/images`, imagesRouter);
-app.use(`${pathname}/api/addUserHeader`, addUserHeaderRouter);
-app.use(`${pathname}/api/adminUser`, adminUserRouter);
-app.use(`${pathname}/api/adminViews`, adminViewsRouter);
-app.use(`${pathname}/api/adminAuthority`, adminAuthorityRouter);
+app.use('/api/vue-blog/search', searchRouter);
+app.use('/api/vue-blog/articleList', articleListRouter);
+app.use('/api/vue-blog/getAside', getAsideRouter);
+app.use('/api/vue-blog/getAsideAuthor', getAsideAuthorRouter);
+app.use('/api/vue-blog/addUser', addUserRouter);
+app.use('/api/vue-blog/signIn', signInRouter);
+app.use('/api/vue-blog/tokenGetUserInfo', tokenGetUserInfoRouter);
+app.use('/api/vue-blog/addArticle', addArticleRouter);
+app.use('/api/vue-blog/updateArticle', updateArticleRouter);
+app.use('/api/vue-blog/getArticleDetail', getArticleDetailRouter);
+app.use('/api/vue-blog/deleteArticle', deleteArticleRouter);
+app.use('/api/vue-blog/addStar', addStarRouter);
+app.use('/api/vue-blog/images', imagesRouter);
+app.use('/api/vue-blog/addUserHeader', addUserHeaderRouter);
+app.use('/api/vue-blog/adminUser', adminUserRouter);
+app.use('/api/vue-blog/adminViews', adminViewsRouter);
+app.use('/api/vue-blog/adminAuthority', adminAuthorityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
