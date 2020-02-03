@@ -11,11 +11,9 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```
-set DEBUG=vue-blog-express:* & npm run devstart
+set DEBUG='vue-blog-express':* & npm run devstart
 ```
 
 ## 说明
 
-### 环境变量
-
-环境变量使用 [dotenv](https://github.com/motdotla/dotenv)。
+在mysql中创建 vueblog 数据库，然后在 vueblog 数据库中执行项目中的 vueblog.sql 文件，创建需要的表。

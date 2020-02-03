@@ -17,7 +17,8 @@ async function tokenGetUserInfo(req, res, next) {
           email: selectData[0].authorEmail,
           admin: selectData[0].admin,
           authority: selectData[0].authority,
-          authorHeadimg: selectData[0].authorHeadimg
+          authorHeadimg: selectData[0].authorHeadimg,
+          authorIntroduce: selectData[0].authorIntroduce
         },
         msg: ''
       });
