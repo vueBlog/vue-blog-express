@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-01-01 11:09:01
+Date: 2020-02-05 17:48:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,8 +32,9 @@ CREATE TABLE `vue_blog` (
   `articleUpdateTime` datetime DEFAULT NULL COMMENT '更新时间',
   `articleView` int(11) NOT NULL DEFAULT '0' COMMENT '文章浏览次数',
   `articleStart` int(11) NOT NULL DEFAULT '0' COMMENT '文章点赞数',
+  `articleColumn` int(255) NOT NULL DEFAULT '0' COMMENT '文章专栏id',
   PRIMARY KEY (`articleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_author
@@ -58,25 +59,14 @@ CREATE TABLE `vue_blog_author` (
 -- ----------------------------
 DROP TABLE IF EXISTS `vue_blog_column`;
 CREATE TABLE `vue_blog_column` (
-  `columnId` int(11) NOT NULL COMMENT '栏目',
+  `columnId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '栏目',
   `columnTitle` varchar(255) NOT NULL COMMENT '栏目名称',
   `columnContent` varchar(255) NOT NULL COMMENT '栏目内容',
-  `columentNumber` int(11) NOT NULL DEFAULT '0' COMMENT '栏目包含的文章数',
-  `columnCreateTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `columnView` bigint(20) NOT NULL COMMENT '栏目的访问数',
+  `columnNumber` int(11) NOT NULL DEFAULT '0' COMMENT '栏目包含的文章数',
+  `columnCreateTime` datetime NOT NULL,
+  `columnView` bigint(20) NOT NULL DEFAULT '0' COMMENT '栏目的访问数',
   PRIMARY KEY (`columnId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for vue_blog_column_article
--- ----------------------------
-DROP TABLE IF EXISTS `vue_blog_column_article`;
-CREATE TABLE `vue_blog_column_article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `columnId` int(11) NOT NULL COMMENT '专栏ID',
-  `articleId` int(11) NOT NULL COMMENT '文章ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_img
@@ -104,7 +94,7 @@ CREATE TABLE `vue_blog_title` (
   `h5` varchar(255) DEFAULT NULL COMMENT '五级标题',
   `h6` varchar(255) DEFAULT NULL COMMENT '六级标题',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_views
@@ -116,4 +106,4 @@ CREATE TABLE `vue_blog_views` (
   `routeTo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对应router.beforeEach中to.path',
   `time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '跳转时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=625 DEFAULT CHARSET=utf8;
