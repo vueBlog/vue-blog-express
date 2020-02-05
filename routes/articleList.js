@@ -26,6 +26,10 @@ async function articleList(req, res, next) {
       let term = `DATE_FORMAT(articleCreateTime, '%Y-%m') = '${req.query.dateTime}'`
       whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
     }
+    if (req.query.columnId) {
+      let term = `articleColumn = ${req.query.columnId}`
+      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+    }
     if (req.query.author) {
       let articleAuthorId = req.query.author
       if (articleAuthorId === 'admin') {

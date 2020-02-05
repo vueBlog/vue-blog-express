@@ -49,11 +49,13 @@ async function selectViewsDetail(req, res, next) {
     let selectData = await mysql.query("SELECT routeFrom, routeTo, DATE_FORMAT(time, '%Y-%m-%d %r') as time FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0 ORDER BY time DESC LIMIT ? OFFSET ?",
       [req.query.start, req.query.end, limitNumber, offsetNumber])
     let totalData = await mysql.query("SELECT * FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0", [req.query.start, req.query.end])
+    let allTotalData = await mysql.query("SELECT * FROM vue_blog_views")
     return res.json({
       isok: true,
       data: {
         selectData,
-        total: totalData.length
+        total: totalData.length,
+        allTotal: allTotalData.length
       },
       msg: ''
     });

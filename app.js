@@ -25,6 +25,7 @@ const getArticleDetailRouter = require('./routes/getArticleDetail');
 const deleteArticleRouter = require('./routes/deleteArticle');
 const addStarRouter = require('./routes/addStar');
 const imagesRouter = require('./routes/images');
+const columnRouter = require('./routes/column');
 const addUserHeaderRouter = require('./routes/addUserHeader');
 const adminUserRouter = require('./routes/adminUser');
 const adminViewsRouter = require('./routes/adminViews');
@@ -60,6 +61,7 @@ app.use('/api/vue-blog/addUserHeader', addUserHeaderRouter);
 app.use('/api/vue-blog/adminUser', adminUserRouter);
 app.use('/api/vue-blog/adminViews', adminViewsRouter);
 app.use('/api/vue-blog/adminAuthority', adminAuthorityRouter);
+app.use('/api/vue-blog/column', columnRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
