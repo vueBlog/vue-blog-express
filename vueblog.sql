@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-05 17:48:19
+Date: 2020-02-06 12:48:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -105,5 +105,10 @@ CREATE TABLE `vue_blog_views` (
   `routeFrom` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对应router.beforeEach中from.path',
   `routeTo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '对应router.beforeEach中to.path',
   `time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '跳转时间',
+  `clientSystem` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端系统',
+  `clientBrowser` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端浏览器',
+  `clientBrowserVersion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端浏览器版本号',
+  `clientIp` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端ip地址',
+  `clientCity` varchar(255) DEFAULT NULL COMMENT '客户端城市',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=625 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=utf8;

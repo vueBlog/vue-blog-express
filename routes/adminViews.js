@@ -9,8 +9,8 @@ router.get('/selectDetail', selectViewsDetail)
 
 async function addViews(req, res, next) {
   try {
-    await mysql.query('INSERT INTO vue_blog_views (routeFrom, routeTo, time) VALUES (?, ?, ?)',
-      [req.body.from, req.body.to, moment().format('YYYY-MM-DD HH:mm:ss')])
+    await mysql.query('INSERT INTO vue_blog_views (routeFrom, routeTo, time, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [req.body.from, req.body.to, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.system, req.body.browser, req.body.browserVersion, req.body.ip, req.body.city])
     return res.json({
       isok: true,
       msg: ''
@@ -46,7 +46,7 @@ async function selectViewsDetail(req, res, next) {
   try {
     let limitNumber = req.query.limit * 1 || 10
     let offsetNumber = (req.query.page * 1 - 1) * limitNumber
-    let selectData = await mysql.query("SELECT routeFrom, routeTo, DATE_FORMAT(time, '%Y-%m-%d %r') as time FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0 ORDER BY time DESC LIMIT ? OFFSET ?",
+    let selectData = await mysql.query("SELECT routeFrom, routeTo, DATE_FORMAT(time, '%Y-%m-%d %r') as time, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0 ORDER BY time DESC LIMIT ? OFFSET ?",
       [req.query.start, req.query.end, limitNumber, offsetNumber])
     let totalData = await mysql.query("SELECT * FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0", [req.query.start, req.query.end])
     let allTotalData = await mysql.query("SELECT * FROM vue_blog_views")
