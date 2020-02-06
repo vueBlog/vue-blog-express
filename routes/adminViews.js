@@ -46,7 +46,7 @@ async function selectViewsDetail(req, res, next) {
   try {
     let limitNumber = req.query.limit * 1 || 10
     let offsetNumber = (req.query.page * 1 - 1) * limitNumber
-    let selectData = await mysql.query("SELECT routeFrom, routeTo, DATE_FORMAT(time, '%Y-%m-%d %r') as time, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0 ORDER BY time DESC LIMIT ? OFFSET ?",
+    let selectData = await mysql.query("SELECT routeFrom, routeTo, DATE_FORMAT(time, '%Y-%m-%d %r') as viewTime, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0 ORDER BY time DESC LIMIT ? OFFSET ?",
       [req.query.start, req.query.end, limitNumber, offsetNumber])
     let totalData = await mysql.query("SELECT * FROM vue_blog_views WHERE DATEDIFF(time, ?) >= 0 AND DATEDIFF(?, time) >= 0", [req.query.start, req.query.end])
     let allTotalData = await mysql.query("SELECT * FROM vue_blog_views")
