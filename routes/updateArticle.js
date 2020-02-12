@@ -50,7 +50,7 @@ async function updateArticle(req, res, next) {
       tocCallback: function (tocMarkdown, tocArray, tocHtml) {
         titleArray = tocArray
       }
-    }).render(`@[toc]${req.body.content}`)
+    }).use(require('markdown-it-sub')).use(require('markdown-it-sup')).use(require('markdown-it-deflist')).use(require('markdown-it-abbr')).use(require('markdown-it-footnote')).use(require('markdown-it-ins')).use(require('markdown-it-mark')).render(`@[toc]${req.body.content}`)
 
     let updateData = await mysql.query('UPDATE vue_blog SET articleTitle = ?, articleSubTitle = ?, articleNature = ?, articleKey = ?, articleContentMarkdown = ?, articleContentHtml = ?, articleUpdateTime  = ? WHERE articleId = ?',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.articleId])

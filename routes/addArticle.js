@@ -50,7 +50,7 @@ async function addArticle(req, res, next) {
       tocCallback: function (tocMarkdown, tocArray, tocHtml) {
         titleArray = tocArray
       }
-    }).render(`@[toc]${req.body.content}`)
+    }).use(require('markdown-it-sub')).use(require('markdown-it-sup')).use(require('markdown-it-deflist')).use(require('markdown-it-abbr')).use(require('markdown-it-footnote')).use(require('markdown-it-ins')).use(require('markdown-it-mark')).render(`@[toc]${req.body.content}`)
     let insertData = await mysql.query('INSERT INTO vue_blog (articleTitle, articleSubTitle, articleNature, articleKey, articleContentMarkdown, articleContentHtml, articleAuthorId, articleCreateTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, req.body.authorId, moment().format('YYYY-MM-DD HH:mm:ss')])
     titleArray.map(item => {
