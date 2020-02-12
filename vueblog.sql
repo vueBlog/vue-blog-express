@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-06 12:48:08
+Date: 2020-02-12 14:18:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -86,13 +86,13 @@ DROP TABLE IF EXISTS `vue_blog_title`;
 CREATE TABLE `vue_blog_title` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `articleId` int(11) NOT NULL COMMENT '文章ID',
-  `h0` varchar(255) DEFAULT NULL COMMENT '文章标题',
-  `h1` varchar(255) DEFAULT NULL COMMENT '一级标题',
-  `h2` varchar(255) DEFAULT NULL COMMENT '二级标题',
-  `h3` varchar(255) DEFAULT NULL COMMENT '三级标题',
-  `h4` varchar(255) DEFAULT NULL COMMENT '四级标题',
-  `h5` varchar(255) DEFAULT NULL COMMENT '五级标题',
-  `h6` varchar(255) DEFAULT NULL COMMENT '六级标题',
+  `h0` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '文章标题',
+  `h1` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '一级标题',
+  `h2` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '二级标题',
+  `h3` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '三级标题',
+  `h4` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '四级标题',
+  `h5` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '五级标题',
+  `h6` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '六级标题',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
@@ -111,4 +111,4 @@ CREATE TABLE `vue_blog_views` (
   `clientIp` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端ip地址',
   `clientCity` varchar(255) DEFAULT NULL COMMENT '客户端城市',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=646 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=648 DEFAULT CHARSET=utf8;
