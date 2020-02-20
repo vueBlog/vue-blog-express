@@ -20,15 +20,15 @@ async function articleList(req, res, next) {
     }
     if (req.query.justOriginal == 'true') {
       let term = 'articleNature = 0'
-      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+      whereSql = whereSql ? whereSql + ` AND ${term}` : `WHERE ${term}`
     }
     if (req.query.dateTime) {
       let term = `DATE_FORMAT(articleCreateTime, '%Y-%m') = '${req.query.dateTime}'`
-      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+      whereSql = whereSql ? whereSql + ` AND ${term}` : `WHERE ${term}`
     }
     if (req.query.columnId) {
       let term = `articleColumn = ${req.query.columnId}`
-      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+      whereSql = whereSql ? whereSql + ` AND ${term}` : `WHERE ${term}`
     }
     if (req.query.author) {
       let articleAuthorId = req.query.author
@@ -37,7 +37,7 @@ async function articleList(req, res, next) {
         articleAuthorId = authorInfo[0].authorId
       }
       let term = `articleAuthorId = '${articleAuthorId}'`
-      whereSql = whereSql ? whereSql + `AND ${term}` : `WHERE ${term}`
+      whereSql = whereSql ? whereSql + ` AND ${term}` : `WHERE ${term}`
     }
     totalSql = `SELECT * FROM vue_blog ${whereSql}`
     selectSql = `SELECT ${selectTableHead} FROM vue_blog ${whereSql} ${orderSql}`
