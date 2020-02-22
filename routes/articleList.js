@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const apicache = require('apicache')
 const mysql = require('../mysql/db')
+const cache = apicache.middleware
 
-router.get('/', articleList)
+router.get('/', cache('5 minutes'), articleList)
 
 async function articleList(req, res, next) {
   try {
