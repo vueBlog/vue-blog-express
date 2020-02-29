@@ -4,7 +4,7 @@ const apicache = require('apicache')
 const mysql = require('../mysql/db')
 const cache = apicache.middleware
 
-router.get('/', cache('1 hour'), articleList)
+router.get('/', cache('5 minutes'), articleList)
 
 async function articleList(req, res, next) {
   try {

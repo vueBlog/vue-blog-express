@@ -14,15 +14,11 @@ for (const k in envConfig) {
 
 const searchRouter = require('./routes/search');
 const articleListRouter = require('./routes/articleList');
-const getAsideRouter = require('./routes/getAside');
-const getAsideAuthorRouter = require('./routes/getAsideAuthor');
+const asideRouter = require('./routes/aside');
 const addUserRouter = require('./routes/addUser');
 const signInRouter = require('./routes/signIn');
 const tokenGetUserInfoRouter = require('./routes/tokenGetUserInfo');
-const addArticleRouter = require('./routes/addArticle');
-const updateArticleRouter = require('./routes/updateArticle');
-const getArticleDetailRouter = require('./routes/getArticleDetail');
-const deleteArticleRouter = require('./routes/deleteArticle');
+const articleRouter = require('./routes/article');
 const addStarRouter = require('./routes/addStar');
 const imagesRouter = require('./routes/images');
 const columnRouter = require('./routes/column');
@@ -46,20 +42,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/vue-blog/search', searchRouter);
 app.use('/api/vue-blog/articleList', articleListRouter);
-app.use('/api/vue-blog/getAside', getAsideRouter);
-app.use('/api/vue-blog/getAsideAuthor', getAsideAuthorRouter);
+app.use('/api/vue-blog/aside', asideRouter);
 app.use('/api/vue-blog/addUser', addUserRouter);
 app.use('/api/vue-blog/signIn', signInRouter);
 app.use('/api/vue-blog/tokenGetUserInfo', tokenGetUserInfoRouter);
-app.use('/api/vue-blog/addArticle', addArticleRouter);
-app.use('/api/vue-blog/updateArticle', updateArticleRouter);
-app.use('/api/vue-blog/getArticleDetail', getArticleDetailRouter);
-app.use('/api/vue-blog/deleteArticle', deleteArticleRouter);
+app.use('/api/vue-blog/article', articleRouter);
 app.use('/api/vue-blog/addStar', addStarRouter);
 app.use('/api/vue-blog/images', imagesRouter);
 app.use('/api/vue-blog/addUserHeader', addUserHeaderRouter);
 app.use('/api/vue-blog/adminUser', adminUserRouter);
-app.use('/api/vue-blog/adminViews', adminViewsRouter);
+app.use('/api/vue-blog/views', adminViewsRouter);
 app.use('/api/vue-blog/adminAuthority', adminAuthorityRouter);
 app.use('/api/vue-blog/column', columnRouter);
 
