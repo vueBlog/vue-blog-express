@@ -9,8 +9,8 @@ router.get('/selectDetail', selectViewsDetail)
 
 async function addViews(req, res, next) {
   try {
-    await mysql.query('INSERT INTO vue_blog_views (routeFrom, routeTo, time, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [req.body.from, req.body.to, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.system, req.body.browser, req.body.browserVersion, req.body.ip, req.body.city])
+    await mysql.query('INSERT INTO vue_blog_views (routeFrom, routeTo, time, clientSystem, clientBrowser, clientBrowserVersion, clientIp, clientCity, client) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [req.body.from, req.body.to, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.system, req.body.browser, req.body.browserVersion, req.body.ip, req.body.city, req.body.client])
     return res.json({
       isok: true,
       msg: ''
