@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-12 14:18:18
+Date: 2020-02-29 09:17:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `vue_blog` (
   `articleStart` int(11) NOT NULL DEFAULT '0' COMMENT '文章点赞数',
   `articleColumn` int(255) NOT NULL DEFAULT '0' COMMENT '文章专栏id',
   PRIMARY KEY (`articleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_author
@@ -52,7 +52,7 @@ CREATE TABLE `vue_blog_author` (
   `token` varchar(255) NOT NULL COMMENT '用户token',
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`authorId`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_column
@@ -66,7 +66,7 @@ CREATE TABLE `vue_blog_column` (
   `columnCreateTime` datetime NOT NULL,
   `columnView` bigint(20) NOT NULL DEFAULT '0' COMMENT '栏目的访问数',
   PRIMARY KEY (`columnId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_img
@@ -77,7 +77,7 @@ CREATE TABLE `vue_blog_img` (
   `articleId` int(11) DEFAULT NULL COMMENT '图片所属的文章id',
   `imgPath` varchar(255) NOT NULL COMMENT '图片地址',
   PRIMARY KEY (`imgId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_title
@@ -94,7 +94,7 @@ CREATE TABLE `vue_blog_title` (
   `h5` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '五级标题',
   `h6` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '六级标题',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vue_blog_views
@@ -110,5 +110,6 @@ CREATE TABLE `vue_blog_views` (
   `clientBrowserVersion` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端浏览器版本号',
   `clientIp` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '客户端ip地址',
   `clientCity` varchar(255) DEFAULT NULL COMMENT '客户端城市',
+  `client` int(11) DEFAULT '0' COMMENT '0：vue-blog, 1: vue-blog-nuxt, 2: vue-blog-m-nuxt',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=648 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
