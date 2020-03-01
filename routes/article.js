@@ -195,7 +195,7 @@ async function getArticleDetail(req, res, next) {
       await mysql.query(`UPDATE vue_blog SET articleView = ? WHERE articleId = ?`,
         [selectData[0].articleView + 1, articleId])
     }
-    let articleIdArray = await mysql.query(`SELECT articleId FROM vue_blog`)
+    let articleIdArray = await mysql.query(`SELECT articleId FROM vue_blog ORDER BY articleId DESC`)
     articleIdArray = articleIdArray.map(item => item.articleId)
     let nowIndex = articleIdArray.indexOf(articleId)
     let prevInfo, nextInfo, prevIndex, nextIndex
