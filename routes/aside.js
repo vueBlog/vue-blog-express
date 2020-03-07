@@ -32,7 +32,7 @@ async function getAside(req, res, next) {
         info: selectSqlThree
       })
     }
-    let selectSqlFour = await mysql.query(`SELECT DATE_FORMAT(articleCreateTime, '%Y-%m') AS id, COUNT(*) AS num FROM vue_blog GROUP BY DATE_FORMAT(articleCreateTime, '%Y-%m')`)
+    let selectSqlFour = await mysql.query(`SELECT DATE_FORMAT(articleCreateTime, '%Y-%m') AS id, COUNT(*) AS num FROM vue_blog GROUP BY DATE_FORMAT(articleCreateTime, '%Y-%m') ORDER BY DATE_FORMAT(articleCreateTime, '%Y-%m') DESC`)
     if (selectSqlFour.length) {
       selectSqlFour.map(item => {
         item.title = `${item.id.replace('-', '年')}月`
