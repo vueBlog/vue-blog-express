@@ -98,7 +98,7 @@ async function updateArticle(req, res, next) {
       linkify: true,
       typographer: true,
       highlight: function (str, lang) {
-        const codeIndex = parseInt(Date.now())
+        const codeIndex = parseInt(Date.now()) + Math.floor(Math.random() * 10000000)
         let html = `<button class="copy-btn" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}">复制</button>`
         const linesLength = str.split(/\n/).length - 1
         let linesNum = '<span aria-hidden="true" class="line-numbers-rows">'
