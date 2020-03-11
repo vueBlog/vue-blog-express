@@ -20,7 +20,7 @@ async function addImage(req, res, next) {
     msg: '上传凭证获取成功',
     upToken: uploadToken
   });
-  next();
+  // next();
 }
 
 module.exports = router;

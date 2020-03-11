@@ -98,32 +98,30 @@ async function updateArticle(req, res, next) {
       linkify: true,
       typographer: true,
       highlight: function (str, lang) {
+        const codeIndex = parseInt(Date.now())
+        let html = `<button class="copy-btn" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}">复制</button>`
+        const linesLength = str.split(/\n/).length - 1
+        let linesNum = '<span aria-hidden="true" class="line-numbers-rows">'
+        for (let index = 0; index < linesLength; index++) {
+          linesNum = linesNum + '<span></span>'
+        }
+        linesNum += '</span>'
         if (lang && hljs.getLanguage(lang)) {
           try {
             const preCode = hljs.highlight(lang, str, true).value
-            const lines = preCode.split(/\n/).slice(0, -1)
-            let html = lines.map((item, index) => {
-              return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>'
-            }).join('')
-            html = '<ol>' + html + '</ol>'
-            if (lines.length) {
+            html = html + preCode
+            if (linesLength) {
               html += '<b class="name">' + lang + '</b>'
             }
-            return '<pre class="hljs"><code>' +
-              html +
-              '</code></pre>'
-          } catch (__) {}
+            return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str}</textarea>`
+          } catch (error) {
+            console.log(error)
+          }
         }
 
         const preCode = md.utils.escapeHtml(str)
-        const lines = preCode.split(/\n/).slice(0, -1)
-        let html = lines.map((item, index) => {
-          return '<li><span class="line-num" data-line="' + (index + 1) + '"></span>' + item + '</li>'
-        }).join('')
-        html = '<ol>' + html + '</ol>'
-        return '<pre class="hljs"><code>' +
-          html +
-          '</code></pre>'
+        html = html + preCode
+        return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str}</textarea>`
       }
     })
     let articleContentHtml = md.use(markdownItTocAndAnchor, {
@@ -131,7 +129,7 @@ async function updateArticle(req, res, next) {
         titleArray = tocArray
       }
     }).use(require('markdown-it-sub')).use(require('markdown-it-sup')).use(require('markdown-it-deflist')).use(require('markdown-it-abbr')).use(require('markdown-it-footnote')).use(require('markdown-it-ins')).use(require('markdown-it-mark')).render(`@[toc]\r${req.body.content}`)
-
+    console.log(articleContentHtml)
     let updateData = await mysql.query('UPDATE vue_blog SET articleTitle = ?, articleSubTitle = ?, articleNature = ?, articleKey = ?, articleContentMarkdown = ?, articleContentHtml = ?, articleUpdateTime  = ? WHERE articleId = ?',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.articleId])
 
