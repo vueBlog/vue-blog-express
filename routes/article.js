@@ -36,7 +36,7 @@ async function addArticle(req, res, next) {
             if (linesLength) {
               html += '<b class="name">' + lang + '</b>'
             }
-            return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str}</textarea>`
+            return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(/<\/textarea>/g, '&lt;textarea>')}</textarea>`
           } catch (error) {
             console.log(error)
           }
@@ -44,7 +44,7 @@ async function addArticle(req, res, next) {
 
         const preCode = md.utils.escapeHtml(str)
         html = html + preCode
-        return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str}</textarea>`
+        return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(/<\/textarea>/g, '&lt;textarea>')}</textarea>`
       }
     })
     let articleContentHtml = md.use(markdownItTocAndAnchor, {
