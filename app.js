@@ -27,6 +27,9 @@ const adminUserRouter = require('./routes/adminUser');
 const adminViewsRouter = require('./routes/adminViews');
 const adminAuthorityRouter = require('./routes/adminAuthority');
 
+// authorityRouter
+const authorityRouter = require('./routes/authorityRouter');
+
 const app = express();
 
 // view engine setup
@@ -54,6 +57,9 @@ app.use('/api/vue-blog/adminUser', adminUserRouter);
 app.use('/api/vue-blog/views', adminViewsRouter);
 app.use('/api/vue-blog/adminAuthority', adminAuthorityRouter);
 app.use('/api/vue-blog/column', columnRouter);
+
+// authorityRouter
+app.use('/api/authorityRouter', authorityRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
