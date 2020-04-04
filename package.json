@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set NODE_ENV=development&& node ./bin/www",
+    "start": "set NODE_ENV=production&& node ./bin/www",
     "devstart": "set NODE_ENV=development&& nodemon ./bin/www"
   },
   "dependencies": {
