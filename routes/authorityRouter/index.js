@@ -13,42 +13,61 @@ async function login(req, res, next) {
 }
 
 async function getRouter(req, res, next) {
-  let result
-  if (req.body.type == 0) {
-    result = [
+  let result = {
+    path: '/',
+    name: 'Admin',
+    component: 'Admin',
+    meta: {
+      title: '个人中心',
+      requiresAuth: true,
+      roles: [0, 1, 2]
+    },
+    redirect: '/base',
+    children: [
       {
-        path: 'vip',
-        name: 'AdminVip',
+        path: 'base',
+        name: 'AdminBase',
+        component: 'AdminBase',
         meta: {
+          title: '基本信息',
           requiresAuth: true,
-          authority: 1
-        }
-      },
-      {
-        path: 'admin',
-        name: 'AdminAdmin',
-        meta: {
-          requiresAuth: true,
-          authority: 0
-        }
-      }
-    ]
-  } else if (req.body.type == 1) {
-    result = [
-      {
-        path: 'vip',
-        name: 'AdminVip',
-        meta: {
-          requiresAuth: true,
-          authority: 1
+          roles: [0, 1, 2]
         }
       }
     ]
   }
+
+  if ([0, 1].includes(req.body.type * 1)) {
+    result.children.push({
+      path: 'vip',
+      name: 'AdminVip',
+      component: 'AdminVip',
+      meta: {
+        title: 'Vip信息',
+        requiresAuth: true,
+        roles: [0, 1]
+      }
+    })
+  }
+
+  if (req.body.type * 1 === 0) {
+    result.children.push({
+      path: 'admin',
+      name: 'AdminAdmin',
+      component: 'AdminAdmin',
+      meta: {
+        title: '管理员',
+        requiresAuth: true,
+        roles: [0]
+      }
+    })
+  }
+
   return res.json({
     isok: true,
     msg: '',
     data: result
   });
 }
+
 module.exports = router;
