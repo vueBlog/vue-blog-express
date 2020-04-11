@@ -16,7 +16,7 @@ async function getAside(req, res, next) {
         info: selectSqlOne
       })
     }
-    let selectSqlTwo = await mysql.query(`SELECT columnId AS id, columnTitle AS title, columnNumber AS num FROM vue_blog_column ORDER BY columnCreateTime`)
+    let selectSqlTwo = await mysql.query(`SELECT columnId AS id, columnTitle AS title, columnNumber AS num FROM vue_blog_column ORDER BY columnSort`)
     if (selectSqlTwo.length) {
       selectData.push({
         title: '博客专栏',

@@ -10,6 +10,7 @@ router.get('/detail', columnDetail)
 router.get('/articleList', columnArticle)
 router.post('/articleSet', columnArticleSet)
 router.get('/articleAllList', columnArticleAllList)
+router.post('/changeSort', columnChangeSort)
 
 async function columnEditor(req, res, next) {
   try {
@@ -17,8 +18,9 @@ async function columnEditor(req, res, next) {
       await mysql.query('UPDATE vue_blog_column SET columnTitle = ?, columnContent = ? WHERE columnId = ?',
         [req.body.name, req.body.desc, req.body.id])
     } else {
-      await mysql.query('INSERT INTO vue_blog_column (columnTitle, columnContent, columnCreateTime) VALUES (?, ?, ?)',
-        [req.body.name, req.body.desc, moment().format('YYYY-MM-DD HH:mm:ss')])
+      let columnList = await mysql.query("SELECT columnId, columnTitle, columnContent, columnNumber, DATE_FORMAT(columnCreateTime, '%Y-%m-%d %r') as time, columnSort FROM vue_blog_column ORDER BY columnSort")
+      await mysql.query('INSERT INTO vue_blog_column (columnTitle, columnContent, columnCreateTime, columnSort) VALUES (?, ?, ?, ?)',
+        [req.body.name, req.body.desc, moment().format('YYYY-MM-DD HH:mm:ss'), columnList[columnList.length - 1].columnSort * 1 + 1])
     }
     return res.json({
       isok: true,
@@ -35,7 +37,7 @@ async function columnEditor(req, res, next) {
 
 async function columnList(req, res, next) {
   try {
-    let selectData = await mysql.query("SELECT columnId, columnTitle, columnContent, columnNumber, DATE_FORMAT(columnCreateTime, '%Y-%m-%d %r') as time FROM vue_blog_column")
+    let selectData = await mysql.query("SELECT columnId, columnTitle, columnContent, columnNumber, DATE_FORMAT(columnCreateTime, '%Y-%m-%d %r') as time, columnSort FROM vue_blog_column ORDER BY columnSort")
     return res.json({
       isok: true,
       data: selectData,
@@ -159,4 +161,25 @@ async function columnArticleAllList(req, res, next) {
   }
   next();
 }
+
+async function columnChangeSort(req, res, next) {
+  try {
+    if (req.body.list.length) {
+      for (let i = 0, len = req.body.list.length; i < len; i++) {
+        await mysql.query("UPDATE vue_blog_column SET columnSort = ? WHERE columnId = ?",
+          [req.body.list[i].columnSort, req.body.list[i].columnId])
+      }
+    }
+    return res.json({
+      isok: true,
+      msg: '更新成功'
+    });
+  } catch (error) {
+    return res.json({
+      isok: false,
+      msg: error
+    });
+  }
+}
+
 module.exports = router;
