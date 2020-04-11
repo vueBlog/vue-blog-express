@@ -19,8 +19,9 @@ async function columnEditor(req, res, next) {
         [req.body.name, req.body.desc, req.body.id])
     } else {
       let columnList = await mysql.query("SELECT columnId, columnTitle, columnContent, columnNumber, DATE_FORMAT(columnCreateTime, '%Y-%m-%d %r') as time, columnSort FROM vue_blog_column ORDER BY columnSort")
+      let sort = columnList.length ? columnList[columnList.length - 1].columnSort * 1 + 1 : 1
       await mysql.query('INSERT INTO vue_blog_column (columnTitle, columnContent, columnCreateTime, columnSort) VALUES (?, ?, ?, ?)',
-        [req.body.name, req.body.desc, moment().format('YYYY-MM-DD HH:mm:ss'), columnList[columnList.length - 1].columnSort * 1 + 1])
+        [req.body.name, req.body.desc, moment().format('YYYY-MM-DD HH:mm:ss'), sort])
     }
     return res.json({
       isok: true,
