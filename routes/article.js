@@ -127,7 +127,7 @@ async function updateArticle(req, res, next) {
         titleArray = tocArray
       }
     }).use(require('markdown-it-sub')).use(require('markdown-it-sup')).use(require('markdown-it-deflist')).use(require('markdown-it-abbr')).use(require('markdown-it-footnote')).use(require('markdown-it-ins')).use(require('markdown-it-mark')).render(`@[toc]\r${req.body.content}`)
-    console.log(articleContentHtml)
+
     let updateData = await mysql.query('UPDATE vue_blog SET articleTitle = ?, articleSubTitle = ?, articleNature = ?, articleKey = ?, articleContentMarkdown = ?, articleContentHtml = ?, articleUpdateTime  = ? WHERE articleId = ?',
       [req.body.title, subTitle, req.body.nature, req.body.keyWords.join(), req.body.content, articleContentHtml, moment().format('YYYY-MM-DD HH:mm:ss'), req.body.articleId])
 
@@ -139,7 +139,7 @@ async function updateArticle(req, res, next) {
       }
     })
     let selectTitle = await mysql.query('SELECT articleId FROM vue_blog_title WHERE articleId = ?', [req.body.articleId])
-    console.log(selectTitle)
+
     if (selectTitle.length) {
       await mysql.query('UPDATE vue_blog_title SET h0 = ?, h1 = ?, h2 = ?, h3 = ?, h4 = ?, h5 = ?, h6 = ? WHERE articleId = ?',
         [

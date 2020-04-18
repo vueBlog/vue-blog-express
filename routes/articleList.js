@@ -4,7 +4,8 @@ const apicache = require('apicache')
 const mysql = require('../mysql/db')
 const cache = apicache.middleware
 
-router.get('/', cache('5 minutes'), articleList)
+router.get('/', cache('1 day'), articleList)
+router.get('/clear', articleListClear)
 
 async function articleList(req, res, next) {
   try {
@@ -60,6 +61,21 @@ async function articleList(req, res, next) {
     });
   }
   next();
+}
+
+async function articleListClear(req, res, next) {
+  try {
+    apicache.clear()
+    return res.json({
+      isok: true,
+      msg: '刷新成功'
+    });
+  } catch (error) {
+    return res.json({
+      isok: false,
+      msg: error
+    });
+  }
 }
 
 module.exports = router;
