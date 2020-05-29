@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=production&& node ./bin/www",
-    "devstart": "set NODE_ENV=development&& nodemon ./bin/www"
+    "devstart": "set NODE_ENV=development&& nodemon ./bin/www",
+    "commit": "git-cz"
   },
   "dependencies": {
     "apicache": "^1.5.3",
@@ -32,6 +33,26 @@
     "qiniu": "^7.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5",
     "nodemon": "^1.19.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
