@@ -19,6 +19,7 @@ const addUserHeaderRouter = require('./routes/addUserHeader');
 const adminUserRouter = require('./routes/adminUser');
 const adminViewsRouter = require('./routes/adminViews');
 const adminAuthorityRouter = require('./routes/adminAuthority');
+const adRouter = require('./routes/ad');
 
 // authorityRouter
 const authorityRouter = require('./routes/authorityRouter');
@@ -50,6 +51,7 @@ app.use('/api/vue-blog/adminUser', adminUserRouter);
 app.use('/api/vue-blog/views', adminViewsRouter);
 app.use('/api/vue-blog/adminAuthority', adminAuthorityRouter);
 app.use('/api/vue-blog/column', columnRouter);
+app.use('/api/vue-blog/ad', adRouter);
 
 // authorityRouter
 app.use('/api/authorityRouter', authorityRouter);
